@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/src/images/icon.png" sizes="16x16" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Starbucks Winter Quiz 2025 – answer a few quick questions about your favorite Starbucks winter drinks for a chance to unlock an exclusive reward."
+    />
+    <title>Starbucks Winter Quiz 2025</title>
+    <!-- JS adapter start -->
+    <script type="application/javascript">
+    function getCookie (name) {
+        var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
+        var value = v ? v[2] : null
+        return value && value !== 'undefined' ? value : null
+    }
+
+    function setCookie (name, value, days) {
+        var d = new Date()
+        d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days)
+        document.cookie = name + '=' + value + ';path=/;expires=' + d.toUTCString()
+    }
+
+    function getSubId () {
+        var params = new URLSearchParams(window.location.search)
+        if (!'{subid}'.match('{')) {
+            return '{subid}'
+        }
+        var clientSubid = '<?php echo isset($client) ? $client->getSubid() : "" ?>'
+        if (clientSubid && !/>/.test(clientSubid)) {
+            return clientSubid
+        }
+        return params.get('_subid') || params.get('subid') || getCookie('subid') || getCookie('_subid') || null
+    }
+
+    function getToken () {
+        var params = new URLSearchParams(window.location.search)
+        if (!'{token}'.match('{')) {
+            return '{token}'
+        }
+        var clientToken = '<?php echo isset($client) ? $client->getToken() : "" ?>'
+        if (clientToken && !/>/.test(clientToken)) {
+            return clientToken
+        }
+        return params.get('_token') || params.get('token') || getCookie('token') || null
+    }
+
+    function getPixel () {
+        var params = new URLSearchParams(window.location.search)
+        if (!'{pixel}'.match('{')) {
+            return '{pixel}'
+        }
+        return params.get('pixel') || getCookie('pixel') || null
+    }
+
+    function sendPostback (element, event, status, payout = 0, tid = '', sub_id_1 = '', sub_id_2 = '') {
+        var subId = getSubId() || ''
+        var postbackUrl = 'POSTBACK_URL/postback?subid=' + subId + '&status=' + status + '&payout=' + payout + '&tid=' + tid + '&sub_id_1=' + sub_id_1 + '&sub_id_2=' + sub_id_2
+        var redirectUrl = element.getAttribute('href')
+        event.preventDefault()
+        fetch(postbackUrl)
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Postback sent successfully')
+                    } else {
+                        console.error('Error sending postback')
+                    }
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending request:', error)
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl
+                    }
+                })
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var params = new URLSearchParams(window.location.search)
+        var subid = getSubId()
+        var token = getToken()
+        var pixel = getPixel()
+        params.set('_token', token)
+        setCookie('pixel', pixel)
+        setCookie('token', token)
+        setCookie('subid', subid)
+        document.querySelectorAll('a').forEach(function (link) {
+            try {
+                var url = new URL(link.href)
+                params.forEach(function (v, k) {
+                    url.searchParams.append(k, v)
+                })
+                link.href = url.toString()
+            } catch (e) {
+                console.error(`[Exception] Bad params: unexpected link '${link.href}' for new Url()`);
+            }
+        })
+        var SUBID_TEMPLATE_NAME = "subid";
+        var TOKEN_TEMPLATE_NAME = "token";
+        var PIXEL_TEMPLATE_NAME = "pixel";
+        var subIdRegExp = new RegExp(`\{${SUBID_TEMPLATE_NAME}\}`, "g");
+        var tokenRegExp = new RegExp(`\{${TOKEN_TEMPLATE_NAME}\}`, "g");
+        var pixelRegExp = new RegExp(`\{${PIXEL_TEMPLATE_NAME}\}`, "g");
+        document
+                .querySelectorAll('input[type="hidden"]')
+                .forEach(function (input) {
+                    if (subIdRegExp.test(input.value)) {
+                        input.value = input.value.replaceAll(subIdRegExp, subid)
+                    }
+                    if (tokenRegExp.test(input.value)) {
+                        input.value = input.value.replaceAll(tokenRegExp, token)
+                    }
+                    if (pixelRegExp.test(input.value)) {
+                        input.value = input.value.replaceAll(pixelRegExp, pixel)
+                    }
+                })
+        document.querySelectorAll('form').forEach(function (form) {
+            params.forEach(function (v, k) {
+                var input = document.createElement('input')
+                input.type = 'hidden'
+                input.name = k
+                input.value = v
+                form.append(input)
+            })
+        })
+    })
+    </script>
+    <!-- JS adapter end -->
+    <script>
+      document.addEventListener("contextmenu", function(e) {
+          e.preventDefault();
+      });
+
+      document.onkeydown = function(e) {
+          if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) {
+              return false;
+          }
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+Create branded survey from surveybrand-template:
+
+**Brand:** [BRAND NAME] ← Required
+**Logo:** [IMAGE/URL] ← Required  
+**Type:** [settlement/gift-card/sweepstakes] ← Optional (default: settlement)
+**Amount:** [£500/€200/$100] ← Optional (will prompt if missing)
+**Region:** [UK/US/EU] ← Optional (infer from currency or default UK)
+**Color:** [#hex or name] ← Optional (extract from logo)
+
+IMPORTANT: Adapt footer language to brand category (not food-specific for non-food brands).
+
+Read BRAND_GENERATION_GUIDE.md for technical steps.
+
+---
+
+EXAMPLES:
+
+McDonald's Settlement:
+**Brand:** McDonald's
+**Logo:** https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png
+**Type:** settlement
+**Amount:** £500
+**Region:** UK
+
+Starbucks Gift Card:
+**Brand:** Starbucks  
+**Logo:** [paste Starbucks logo image]
+**Type:** gift-card
+**Amount:** $200 gift card
+**Region:** US
+**Color:** #00704A
+
+Minimal Example (Claude will ask for missing info):
+**Brand:** Amazon
+**Logo:** [paste Amazon logo]
